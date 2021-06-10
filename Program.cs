@@ -52,137 +52,226 @@ namespace NinetiesTV
         // 2. Return a list of show names ordered alphabetically.
         static List<string> NamesAlphabetically(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .OrderBy(s => s.Name)
+                .Select(s => s.Name)
+                .ToList();
         }
 
         // 3. Return a list of shows ordered by their IMDB Rating with the highest rated show first.
-        static List<Show> ShowsByPopularity(List<Show> shows)
+        static List<string> ShowsByPopularity(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> above to List<string> to make output look nicer
+            return shows
+                .OrderByDescending(s => s.ImdbRating)
+                .Select(s => s.Name + " --- IMDB Rating: " + s.ImdbRating)
+                .ToList();
         }
 
         // 4. Return a list of shows whose title contains an & character.
-        static List<Show> ShowsWithAmpersand(List<Show> shows)
+        static List<string> ShowsWithAmpersand(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> above to List<string> to make output look nicer
+            return shows
+                .Where(s => s.Name.Contains("&"))
+                .Select(s => s.Name)
+                .ToList();
         }
 
         // 5. Return the most recent year that any of the shows aired.
         static int MostRecentYear(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Select(s => s.EndYear).Max();
         }
 
         // 6. Return the average IMDB rating for all the shows.
         static double AverageRating(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Select(s => s.ImdbRating)
+                .Average();
         }
 
         // 7. Return the shows that started and ended in the 90s.
-        static List<Show> OnlyInNineties(List<Show> shows)
+        static List<string> OnlyInNineties(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> to List<string> to make output look better
+            return shows
+                .Where(s => 1990 <= s.StartYear && s.StartYear <= 1999 && 1990 <= s.EndYear && s.EndYear <= 1999)
+                .Select(s => s.Name + " first aired in " + s.StartYear + " and aired its final episode in " + s.EndYear)
+                .ToList();
         }
 
         // 8. Return the top three highest rated shows.
-        static List<Show> TopThreeByRating(List<Show> shows)
+        static List<string> TopThreeByRating(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> to List<string> to make output look better
+            return shows
+                .OrderByDescending(s => s.ImdbRating)
+                .Take(3)
+                .Select(s => $"{s.Name} has a rating of {s.ImdbRating}.")
+                .ToList();
         }
 
         // 9. Return the shows whose name starts with the word "The".
-        static List<Show> TheShows(List<Show> shows)
+        static List<string> TheShows(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> to List<string> to make output look better
+            return shows
+                .Where(s => s.Name.StartsWith("The"))
+                .Select(s => s.Name)
+                .ToList();
         }
 
         // 10. Return all shows except for the lowest rated show.
-        static List<Show> AllButWorst(List<Show> shows)
+        static List<string> AllButWorst(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> to List<string> to make output look better
+            return shows
+                .OrderByDescending(s => s.ImdbRating)
+                .SkipLast(1)
+                .Select(s => $"{s.Name} --- IMDB Rating: {s.ImdbRating}")
+                .ToList();
         }
 
         // 11. Return the names of the shows that had fewer than 100 episodes.
         static List<string> FewEpisodes(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Where(s => s.EpisodeCount < 100)
+                .Select(s => $"{s.Name} had {s.EpisodeCount} episodes")
+                .ToList();
         }
 
         // 12. Return all shows ordered by the number of years on air.
         //     Assume the number of years between the start and end years is the number of years the show was on.
-        static List<Show> ShowsByDuration(List<Show> shows)
+        static List<string> ShowsByDuration(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed List<Show> to List<string> to make output look better
+            return shows
+                .OrderByDescending(s => s.EndYear - s.StartYear)
+                .Select(s => $"{s.Name} was aired for {s.EndYear - s.StartYear} year(s)")
+                .ToList();
         }
 
         // 13. Return the names of the comedy shows sorted by IMDB rating.
         static List<string> ComediesByRating(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Where(s => s.Genres.Contains("Comedy"))
+                .OrderByDescending(s => s.ImdbRating)
+                .Select(s => $"{s.Name} --- IMDB Rating: {s.ImdbRating}")
+                .ToList();
         }
 
         // 14. Return the shows with more than one genre ordered by their starting year.
         static List<Show> WithMultipleGenresByStartYear(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Where(s => s.Genres.Count >= 2)
+                .OrderBy(s => s.StartYear)
+                .ToList();
         }
 
         // 15. Return the show with the most episodes.
-        static Show MostEpisodes(List<Show> shows)
+        static string MostEpisodes(List<Show> shows)
         {
-            throw new NotImplementedException();
+            //Changed Show to string to make output look better
+            return shows
+                .OrderByDescending(s => s.EpisodeCount)
+                .Select(s => $"{s.Name} has {s.EpisodeCount} episodes")
+                .First();
         }
 
         // 16. Order the shows by their ending year then return the first 
         //     show that ended on or after the year 2000.
         static Show EndedFirstAfterTheMillennium(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .OrderBy(s => s.EndYear)
+                .First(s => s.EndYear >= 2000);
         }
 
         // 17. Order the shows by rating (highest first) 
         //     and return the first show with genre of drama.
         static Show BestDrama(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .OrderByDescending(s => s.ImdbRating)
+                .First(s => s.Genres.Contains("Drama"));
         }
 
         // 18. Return all dramas except for the highest rated.
         static List<Show> AllButBestDrama(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Where(s => s.Genres.Contains("Drama"))
+                .OrderByDescending(s => s.ImdbRating)
+                .Skip(1)
+                .ToList();
         }
 
         // 19. Return the number of crime shows with an IMDB rating greater than 7.0.
         static int GoodCrimeShows(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Where(s => s.Genres.Contains("Crime") && s.ImdbRating > 7.0)
+                .Count();
         }
 
         // 20. Return the first show that ran for more than 10 years 
         //     with an IMDB rating of less than 8.0 ordered alphabetically.
         static Show FirstLongRunningTopRated(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .Where(s => s.EndYear - s.StartYear > 10 && s.ImdbRating < 8.0)
+                .OrderBy(s => s.Name)
+                .First();
         }
 
         // 21. Return the show with the most words in the name.
         static Show WordieastName(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows
+                .OrderByDescending(s => s.Name.Split(" ").Count())
+                .First();
         }
 
         // 22. Return the names of all shows as a single string seperated by a comma and a space.
         static string AllNamesWithCommas(List<Show> shows)
         {
-            throw new NotImplementedException();
+            string AllShows = string.Empty;
+            foreach (Show x in shows)
+            {
+                AllShows += $"{x.Name}, ";
+            }
+            string fix = AllShows.Substring(0, AllShows.Length - 2);
+            return fix;
+        }
+
+        //For #23
+        static string ReplaceLastOccurrence(string Source, string Find, string Replace)
+        {
+            int place = Source.LastIndexOf(Find);
+
+            if (place == -1)
+                return Source;
+
+            string result = Source.Remove(place, Find.Length).Insert(place, Replace);
+            return result;
         }
 
         // 23. Do the same as above, but put the word "and" between the second-to-last and last show name.
         static string AllNamesWithCommasPlsAnd(List<Show> shows)
         {
-            throw new NotImplementedException();
+            string AllShows = string.Empty;
+            foreach (Show x in shows)
+            {
+                AllShows += $"{x.Name}, ";
+            }
+            string fix = AllShows.Substring(0, AllShows.Length - 2);
+            return ReplaceLastOccurrence(fix, ",", " and");
         }
 
 
